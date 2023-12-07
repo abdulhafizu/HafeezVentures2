@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+  <h2>Recycling Operations</h2>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Shift</th>
+        <th>Meter Reading</th>
+        <th>Material Used</th>
+        <th>Rate</th>
+        <th>Customer Name</th>
+        <th>Created At</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for operation in recycling %}
+        <tr>
+          <td>{{ operation.meter_ID.date }}</td>
+          <td>{{ operation.meter_ID.get_shift_display }}</td>
+          <td>{{ operation.meter_ID.meter_reading|intcomma }}</td>
+          <td>{{ operation.material_used|intcomma }}</td>
+          <td>{{ operation.rate }}</td>
+          <td>{{ operation.customer_serial.customer }}</td>
+          <td>{{ operation.created_at }}</td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="11">No recycling operations found.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- Pagination Links -->
+  <div class="pagination">
+    <span class="step-links">
+      {% if recycling.has_previous %}
+        <a href="?page=1">&laquo; first</a> |
+        <a href="?page={{ recycling.previous_page_number }}">previous</a>
+      {% endif %}
+
+      <span class="current">
+       | Page {{ recycling.number }} of {{ recycling.paginator.num_pages }}.|
+      </span>
+
+      {% if recycling.has_next %}
+        <a href="?page={{ recycling.next_page_number }}">next</a> |
+        <a href="?page={{ recycling.paginator.num_pages }}">last &raquo;</a>
+      {% endif %}
+    </span>
+  </div>
+
+  <a href="{% url 'index' %}" class="btn btn-primary">Home</a>
+{% endblock %}

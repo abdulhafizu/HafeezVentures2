@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Expense Detail</h2>
+          <p>N{{ expense.amount }}</p>
+          <p>{{ expense.description }}</p>
+          <p>{{ expense.category.name }}</p>
+          <p>{{ expense.created_at }}</p>
+
+  <a href="{% url 'edit-expense' %}" class="btn btn-secondary">Edit Expense</a>
+{% endblock %}

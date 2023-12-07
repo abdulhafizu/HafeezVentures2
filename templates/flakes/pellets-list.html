@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+
+  <h2>Pellets</h2>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Serial</th>
+        <th>Flakes Type</th>
+        <th>Flakes Quantity</th>
+        <th>Pellets Quantity</th>
+        <th>price</th>
+        <th>Profit</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for pellet_price in pellets_prices %}
+        <tr>
+          <td>{{ pellet_price.date }}</td>
+          <td>{{ pellet_price.serial.serial }}</td>
+          <td>{{ pellet_price.serial.flakes_type }}</td>
+          <td>{{ pellet_price.serial.flakes_quantity | intcomma }}</td>
+          <td>{{ pellet_price.pellets_quantity | intcomma }}</td>
+          <td>{{ pellet_price.price | intcomma }}</td>
+          <td style="color: {% if pellet_price.profit < 0 %}red{% else %}green{% endif %};">
+          {{ pellet_price.profit | intcomma }}
+          </td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="7">No pellet prices available.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- Pagination Links -->
+  <div class="pagination">
+    <span class="step-links">
+      {% if pellets_prices.has_previous %}
+        <a href="?page=1">&laquo; first</a> |
+        <a href="?page={{ pellets_prices.previous_page_number }}">previous</a>
+      {% endif %}
+
+      <span class="current">
+        | Page {{ pellets_prices.number }} of {{ pellets_prices.paginator.num_pages }}.|
+      </span>
+
+      {% if pellets_prices.has_next %}
+        <a href="?page={{ pellets_prices.next_page_number }}">next</a> |
+        <a href="?page={{ pellets_prices.paginator.num_pages }}">last &raquo;</a>
+      {% endif %}
+    </span>
+  </div>
+
+  <a href="{% url 'index' %}" class="btn btn-primary">Home</a>
+{% endblock %}

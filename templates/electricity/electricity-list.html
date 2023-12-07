@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+  <h2>Electricity List</h2>
+
+ <table class="table">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Shift</th>
+            <th>Meter Reading</th>
+            <th>Electricity Consumption</th>
+            <th>Electricity Cost</th>
+            <th>Standard Electricity Cost</th>
+            <th>Electricity Variance</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for instance in electricity_details %}
+            <tr>
+                <td>{{ instance.date }}</td>
+                <td>{{ instance.get_shift_display }}</td>
+                <td>{{ instance.meter_reading| intcomma }}</td>
+                <td>{{ instance.electricity_consumption }}</td>
+                <td>{{ instance.electricity_cost| intcomma }}</td>
+                <td>{{ instance.standard_electricity_cost|floatformat:2| intcomma }}</td>
+                <td style="color: {% if instance.electricity_variance < 0 %}red{% else %}green{% endif %};">
+                      {{ instance.electricity_variance|floatformat:2| intcomma }}
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="7">No electricity readings found.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+  <a href="{% url 'index' %}" class="btn btn-primary">Home</a>
+{% endblock %}

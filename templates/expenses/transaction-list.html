@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% block content %}
+  <h2 class="text-center">Transaction Details</h2>
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th>Date</th>
+          <th>Description</th>
+          <th>Debit</th>
+          <th>Credit</th>
+          <th>Balance</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for transaction in transaction_details %}
+          <tr>
+            <td>{{ transaction.date|date:"F j, Y, g:i a" }}</td>
+            <td>{{ transaction.description }}</td>
+            <td>
+              {% if transaction.debit_amount %}
+                <span class="text-danger">N{{ transaction.debit_amount|intcomma }}</span>
+              {% else %}
+                <span class="text-muted">-</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if transaction.credit_amount %}
+                <span class="text-success">N{{ transaction.credit_amount|intcomma }}</span>
+              {% else %}
+                <span class="text-muted">-</span>
+              {% endif %}
+            </td>
+            <td>N{{ transaction.balance|intcomma }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

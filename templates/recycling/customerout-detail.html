@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+  <h2>Customer Metrics</h2>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Customer Serial</th>
+        <th>Material Quantity</th>
+        <th>Total Material Used</th>
+        <th>Total Bangori</th>
+        <th>Total Material Lost</th>
+        <th>Percentage Lost</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for customer in customer_metrics %}
+        <tr>
+          <td>{{ customer.customer_serial }}</td>
+          <td>{{ customer.material_quantity|floatformat:2|intcomma }}</td>
+          <td>{{ customer.total_material_used|floatformat:2|intcomma }}</td>
+          <td>{{ customer.total_bangori|floatformat:2|intcomma }}</td>
+          <td>{{ customer.total_material_lost|floatformat:2|intcomma }}</td>
+          <td>{{ customer.percentage_lost|floatformat:2 }}%</td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="6">No customer metrics found.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <a href="{% url 'index' %}" class="btn btn-primary">Home</a>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+
+
+{% if account %}
+  <h2>Account Balance</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Account Name:</th>
+        <th>Balance:</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{ account.account_name }}</td>
+        <td>N{{ account.balance|intcomma }}</td>
+      </tr>
+    </tbody>
+  </table>
+{% endif %}
+{% endblock %}

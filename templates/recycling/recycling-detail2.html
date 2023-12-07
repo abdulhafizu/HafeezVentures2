@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load humanize %}
+  <h2>Recycling Operation Details</h2>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>User:</th>
+        <th>Date:</th>
+        <th>Material Used:</th>
+        <th>Rate:</th>
+        <th>Bangori:</th>
+        <th>Created At:</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% with recycling_operation=object %}
+        <tr>
+          <td>{{ recycling_operation.user }}</td>
+          <td>{{ recycling_operation.meter_ID.date }}</td>
+          <td>{{ recycling_operation.material_used|intcomma }}</td>
+          <td>N{{ recycling_operation.rate }}</td>
+          <td>{{ recycling_operation.bangori }}</td>
+          <td>{{ recycling_operation.created_at }}</td>
+        </tr>
+      {% endwith %}
+    </tbody>
+  </table>
+
+  <a href="{% url 'customerout-list' %}">Back </a>
+
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+  <h2>Customer In</h2>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Customer Serial No</th>
+        <th>Customer</th>
+        <th>Material Type</th>
+        <th>Material Quantity</th>
+        <th>Action</th>
+        <th>Processed</th>  <!-- Added for the action column -->
+      </tr>
+    </thead>
+    <tbody>
+      {% for customerin in customerout_list %}
+        <tr>
+          <td>{{ customerin.date }}</td>
+          <td>{{ customerin.customer_serial }}</td>
+          <td>{{ customerin.customer }}</td>
+          <td>{{ customerin.material_type }}</td>
+          <td>{{ customerin.material_quantity | intcomma }}</td>
+          <td><a href="{% url 'recycling-detail2' customerin.customer_serial %}">View Recycling Details</a></td>
+          <td>
+            {% if customerin.is_processed %}
+              Yes
+            {% else %}
+              No
+            {% endif %}
+          </td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="9">No customer in found.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

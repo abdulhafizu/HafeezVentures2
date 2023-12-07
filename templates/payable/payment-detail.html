@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>Payment Details</h1>
+  <table class="table">
+    <tr>
+      <th>Customer:</th>
+      <td>{{ object.customer }}</td>
+    </tr>
+    <tr>
+      <th>Amount:</th>
+      <td>{{ object.amount }}</td>
+    </tr>
+    <tr>
+      <th>Due Date:</th>
+      <td>{{ object.due_date }}</td>
+    </tr>
+  </table>
+  <a href="{% url 'payment-list' %}" class="btn btn-primary">Back to Payment List</a>
+{% endblock %}

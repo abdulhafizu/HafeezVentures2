@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+  <h3>Packer Salary Payment</h3>
+  <hr>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+
+    <button type="submit" class="btn btn-primary">Post Salary Payment</button>
+  </form>
+  
+
+{% endblock %}

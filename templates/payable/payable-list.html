@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load humanize %}
+  <h1>Payable Items</h1>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Customer</th>
+        <th>Amount</th>
+        <th>Due Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for payable in payable %}
+        <tr>
+          <td>{{ payable.id }}</td>
+          <td>{{ payable.customer }}</td>
+          <td>N{{ payable.amount|intcomma }}</td>
+          <td>{{ payable.due_date|default:"N/A" }}</td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="4">No payable items found.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

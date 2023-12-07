@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+
+  <h2>Flakes In List</h2>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Serial</th>
+        <th>Flakes Type</th>
+        <th>Flakes Quantity</th>
+        <th>Unit Cost</th>
+        <th>Total Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for flakesin_instance in flakesin_list %}
+        <tr>
+          <td>{{ flakesin_instance.date }}</td>
+          <td>{{ flakesin_instance.serial }}</td>
+          <td>{{ flakesin_instance.flakes_type }}</td>
+          <td>{{ flakesin_instance.flakes_quantity }}</td>
+          <td>{{ flakesin_instance.unit_cost }}</td>
+          <td>{{ flakesin_instance.total_cost1| intcomma  }}</td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="6">No Flakes In instances available.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- Pagination Links -->
+  <div class="pagination">
+    <span class="step-links">
+      {% if flakesin_list.has_previous %}
+        <a href="?page=1">&laquo; first</a> |
+        <a href="?page={{ flakesin_list.previous_page_number }}">previous</a>
+      {% endif %}
+
+      <span class="current">
+        | Page {{ flakesin_list.number }} of {{ flakesin_list.paginator.num_pages }}.|
+      </span>
+
+      {% if flakesin_list.has_next %}
+        <a href="?page={{ flakesin_list.next_page_number }}">next</a> |
+        <a href="?page={{ flakesin_list.paginator.num_pages }}">last &raquo;</a>
+      {% endif %}
+    </span>
+  </div>
+{% endblock %}
